@@ -67,8 +67,52 @@ border-radius:6px;
 </div>
 
 <script>
-// SIMPLE LOCAL VERSION (works 100% on GitHub Pages mobile)
 let emails = [];
+
+function addEmail(){
+let email = document.getElementById("email").value;
+
+if(!email){
+alert("Enter email");
+return;
+}
+
+emails.push(email);
+document.getElementById("email").value = "";
+render();
+}
+
+function deleteEmail(index){
+emails.splice(index, 1);
+render();
+}
+
+function render(){
+let list = document.getElementById("list");
+list.innerHTML = "";
+
+emails.forEach((e, index) => {
+let div = document.createElement("div");
+div.className = "card";
+
+div.innerHTML = `
+📧 ${e} - Not opened
+<br><br>
+<button onclick="deleteEmail(${index})" style="
+background:red;
+color:white;
+border:none;
+padding:5px 10px;
+cursor:pointer;
+">
+Delete
+</button>
+`;
+
+list.appendChild(div);
+});
+}
+</script>
 
 function addEmail(){
 let email = document.getElementById("email").value;
