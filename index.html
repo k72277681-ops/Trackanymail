@@ -67,7 +67,62 @@ border-radius:6px;
 </div>
 
 <script>
-let emails = [];
+let emails = JSON.parse(localStorage.getItem("emails")) || [];
+
+function save(){
+localStorage.setItem("emails", JSON.stringify(emails));
+}
+
+function addEmail(){
+let email = document.getElementById("email").value;
+
+if(!email){
+alert("Enter email");
+return;
+}
+
+emails.push(email);
+save();
+document.getElementById("email").value = "";
+render();
+}
+
+function deleteEmail(index){
+emails.splice(index, 1);
+save();
+render();
+}
+
+function render(){
+let list = document.getElementById("list");
+list.innerHTML = "";
+
+document.getElementById("count").innerText = emails.length;
+
+emails.forEach((e, index) => {
+let div = document.createElement("div");
+div.className = "card";
+
+div.innerHTML = `
+📧 ${e}
+<br><br>
+<button onclick="deleteEmail(${index})" style="
+background:red;
+color:white;
+border:none;
+padding:5px 10px;
+cursor:pointer;
+">
+Delete
+</button>
+`;
+
+list.appendChild(div);
+});
+}
+
+window.onload = render;
+</script>
 
 function addEmail(){
 let email = document.getElementById("email").value;
