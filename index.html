@@ -1,198 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Trackanymail</title>
-
-<style>
-body{
-margin:0;
-font-family:Arial;
-background:#f4f6ff;
-}
-
-.header{
-background:#2a5cff;
-color:white;
-padding:30px;
-text-align:center;
-}
-
-.container{
-padding:20px;
-max-width:600px;
-margin:auto;
-}
-
-input{
-width:100%;
-padding:10px;
-margin:10px 0;
-}
-
-button{
-padding:10px 15px;
-background:#2a5cff;
-color:white;
-border:none;
-cursor:pointer;
-}
-
-.card{
-background:white;
-padding:10px;
-margin-top:10px;
-border-radius:6px;
-}
-</style>
-
+  <title>Simple List</title>
 </head>
-
 <body>
 
-<div class="header">
-<h1>Trackanymail</h1>
-<p>Email Tracking App (GitHub Version)</p>
-</div>
+  <h3>My List</h3>
 
-<div class="container">
-<p>Total Emails: <span id="count">0</span></p>
+  <input type="text" id="inputBox" placeholder="Type item">
+  <button onclick="addItem()">Add</button>
 
-<input type="text" id="email" placeholder="Enter email">
+  <ul id="myList"></ul>
 
-<button onclick="addEmail()">Add</button>
+  <script>
+    function addItem() {
+      let input = document.getElementById("inputBox");
+      let value = input.value;
 
-<div id="list"></div>
+      if (value === "") return;
 
-</div>
+      let li = document.createElement("li");
+      li.textContent = value;
 
-<script>
-let emails = JSON.parse(localStorage.getItem("emails")) || [];
+      let delBtn = document.createElement("button");
+      delBtn.textContent = "Delete";
+      delBtn.style.marginLeft = "10px";
 
-function save(){
-localStorage.setItem("emails", JSON.stringify(emails));
-}
+      delBtn.onclick = function () {
+        li.remove();
+      };
 
-function addEmail(){
-let email = document.getElementById("email").value;
+      li.appendChild(delBtn);
+      document.getElementById("myList").appendChild(li);
 
-if(!email){
-alert("Enter email");
-return;
-}
-
-emails.push(email);
-save();
-document.getElementById("email").value = "";
-render();
-}
-
-function deleteEmail(index){
-emails.splice(index, 1);
-save();
-render();
-}
-
-function render(){
-let list = document.getElementById("list");
-list.innerHTML = "";
-
-document.getElementById("count").innerText = emails.length;
-
-emails.forEach((e, index) => {
-let div = document.createElement("div");
-div.className = "card";
-
-div.innerHTML = `
-📧 ${e}
-<br><br>
-<button onclick="deleteEmail(${index})" style="
-background:red;
-color:white;
-border:none;
-padding:5px 10px;
-cursor:pointer;
-">
-Delete
-</button>
-`;
-
-list.appendChild(div);
-});
-}
-
-window.onload = render;
-</script>
-
-function addEmail(){
-let email = document.getElementById("email").value;
-
-if(!email){
-alert("Enter email");
-return;
-}
-
-emails.push(email);
-document.getElementById("email").value = "";
-render();
-}
-
-function deleteEmail(index){
-emails.splice(index, 1);
-render();
-}
-
-function render(){
-let list = document.getElementById("list");
-list.innerHTML = "";
-
-emails.forEach((e, index) => {
-let div = document.createElement("div");
-div.className = "card";
-
-div.innerHTML = `
-📧 ${e} - Not opened
-<br><br>
-<button onclick="deleteEmail(${index})" style="
-background:red;
-color:white;
-border:none;
-padding:5px 10px;
-cursor:pointer;
-">
-Delete
-</button>
-`;
-
-list.appendChild(div);
-});
-}
-</script>
-
-function addEmail(){
-let email = document.getElementById("email").value;
-
-if(!email){
-alert("Enter email");
-return;
-}
-
-emails.push(email);
-document.getElementById("email").value = "";
-render();
-}
-
-function render(){
-let list = document.getElementById("list");
-list.innerHTML = "";
-
-emails.forEach(e => {
-let div = document.createElement("div");
-div.className = "card";
-div.innerHTML = "📧 " + e + " - Not opened";
-list.appendChild(div);
-});
-}
-</script>
+      input.value = "";
+    }
+  </script>
 
 </body>
 </html>
