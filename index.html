@@ -1,4 +1,100 @@
-<div id="next" style="margin-top:200px;">
-<h2>Welcome Section</h2>
-<p>This is your next part of the website.</p>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Trackanymail</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:#f4f6ff;
+}
+
+.header{
+background:#2a5cff;
+color:white;
+padding:30px;
+text-align:center;
+}
+
+.container{
+padding:20px;
+max-width:600px;
+margin:auto;
+}
+
+input{
+width:100%;
+padding:10px;
+margin:10px 0;
+}
+
+button{
+padding:10px 15px;
+background:#2a5cff;
+color:white;
+border:none;
+cursor:pointer;
+}
+
+.card{
+background:white;
+padding:10px;
+margin-top:10px;
+border-radius:6px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+<h1>Trackanymail</h1>
+<p>Email Tracking App (GitHub Version)</p>
 </div>
+
+<div class="container">
+
+<h3>Add Email</h3>
+
+<input type="text" id="email" placeholder="Enter email">
+
+<button onclick="addEmail()">Add</button>
+
+<div id="list"></div>
+
+</div>
+
+<script>
+// SIMPLE LOCAL VERSION (works 100% on GitHub Pages mobile)
+let emails = [];
+
+function addEmail(){
+let email = document.getElementById("email").value;
+
+if(!email){
+alert("Enter email");
+return;
+}
+
+emails.push(email);
+document.getElementById("email").value = "";
+render();
+}
+
+function render(){
+let list = document.getElementById("list");
+list.innerHTML = "";
+
+emails.forEach(e => {
+let div = document.createElement("div");
+div.className = "card";
+div.innerHTML = "📧 " + e + " - Not opened";
+list.appendChild(div);
+});
+}
+</script>
+
+</body>
+</html>
